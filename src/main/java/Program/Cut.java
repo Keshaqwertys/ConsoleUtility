@@ -147,7 +147,7 @@ public class Cut {
             text = inputText.split("");
 
             if (endRange == -1) rangeBefore = text.length;
-            rangeLegth = rangeBefore - rangeFrom + 1; //  +1
+            rangeLegth = rangeBefore - rangeFrom + 1;
             count = rangeFrom;
             String symbol;
 
@@ -192,11 +192,7 @@ public class Cut {
             while (scan.hasNextLine()) {
                 resultText = new StringBuilder();
                 if (flagW){
-                    if (flagInput){
-                        text = inputText.split(" +");
-                    }else {
-                        text = scan.nextLine().split(" +");
-                    }
+                    text = scan.nextLine().split(" +");
 
                     if (endRange > text.length - 1) rangeBefore = text.length - 1;
                     if (endRange == -1) rangeBefore = text.length - 1;
@@ -213,12 +209,7 @@ public class Cut {
                         fw.write(System.lineSeparator());
                     }
                 } else if (flagC) {
-
-                    if (flagInput){
-                        text = inputText.split("");
-                    } else {
-                        text = scan.nextLine().split("");
-                    }
+                    text = scan.nextLine().split("");
 
                     if (endRange == -1) rangeBefore = text.length;
                     rangeLegth = rangeBefore - rangeFrom + 1; //  +1
