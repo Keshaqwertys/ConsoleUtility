@@ -61,7 +61,6 @@ public class Cut {
             }
         }
 
-        //informMe();
     }
 
     public void getSlice() throws IOException {
@@ -73,7 +72,6 @@ public class Cut {
         int rangeLegth;
         int count = 0;
         int counterSize = 0;
-        System.out.println("<startRange> " + startRange + " " + "<endRange> " + endRange);
 
         if (flagInput) text = getInputText();
         else text = getInputFileText();
@@ -81,26 +79,18 @@ public class Cut {
         if (flagW){
             for (String s : text) {
                 StringBuilder resultLine = new StringBuilder();
-                //line = s.split("\t[\\t\\v\\r\\n\\f]");
                 line = filterEmptyLines(s.split("[\r\t\f\s]"));
-                rangeBefore = endRange; ///
+                rangeBefore = endRange;
                 if (endRange > line.length - 1 || endRange == -1) rangeBefore = line.length - 1;
 
                 for (int element = rangeFrom; element <= rangeBefore; element++) {
                     resultLine.append(line[element] + " ");
                 }
 
-                String slice = resultLine.toString().trim(); //
-                resultArray.add(slice);                      //
-                counterSize++;                               //
+                String slice = resultLine.toString().trim();
+                resultArray.add(slice);
+                counterSize++;
 
-                //if (flagOutput){
-                //    System.out.println(resultLine);
-                //}else {
-                //    String slice = resultLine.toString().trim();
-                //    resultArray.add(slice);
-                //    counterSize++;
-                //}
             }
         } else if (flagC){
             for (String s : text) {
@@ -115,7 +105,7 @@ public class Cut {
                     if (count >= line.length) break;
                     symbol = line[count];
 
-                    if (!Objects.equals(symbol, " ")){
+                    if (!Objects.equals(symbol, " ") && !Objects.equals(symbol, "\t")){ //
                         resultLine.append(symbol);
                         rangeLegth--;
                     } else {
@@ -124,17 +114,9 @@ public class Cut {
                     count++;
                 }
 
-                String slice = resultLine.toString().trim(); //
-                resultArray.add(slice);                      //
-                counterSize++;                               //
-
-                //if (flagOutput){
-                //    System.out.println(resultLine);
-                //} else {
-                //    String slice = resultLine.toString();
-                //    resultArray.add(slice);
-                //    counterSize++;
-                //}
+                String slice = resultLine.toString().trim();
+                resultArray.add(slice);
+                counterSize++;
             }
         }
 
@@ -144,7 +126,6 @@ public class Cut {
         }
         if (flagOutput)  for (String s: result) System.out.println(s);
         else writeInOutputFile(result);
-        //if (!flagOutput) writeInOutputFile(result);
     }
 
     private boolean isCorrect(String[] range){

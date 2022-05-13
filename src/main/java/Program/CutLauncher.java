@@ -21,10 +21,10 @@ public class CutLauncher {
     @Option(name = "-o")
     private File outputFile;
 
-    @Option(name = "-r")//, required = true)
+    @Option(name = "-r", required = true)
     private String range;
 
-    @Argument(metaVar = "InputName")
+    @Argument()
     private File inputFile;
 
     public static void main(String[] args) throws IOException {
@@ -43,38 +43,8 @@ public class CutLauncher {
             System.exit(0);
         }
 
-        if (range == null){
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Диапозон не задан. Введите диапозон: ");
-            range = reader.readLine();
-
-        }
-
-        boolean checkFlags = (!flagC) && (!flagW);
-        int counter = 0;
-        while (checkFlags){
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            if (counter == 0) System.out.println("Вы не указали параметр диапазона");
-            System.out.println("-w: диапозон указывает на слова");
-            System.out.println("-с: диапозон указывает на буквы");
-            System.out.print("Введите параметр: ");
-            String result = reader.readLine().trim();
-
-            if (result.equals("-w")) flagW = true;
-            if (result.equals("-c")) flagC = true;
-
-            checkFlags = (!flagC) && (!flagW);
-            if (checkFlags) System.out.println("Введный вами параметр неккоректен");
-            counter += 1;
-
-        }
-
-
         Cut cutter = new Cut(this.flagW, this.flagC ,this.inputFile, this.outputFile, this.range);
 
-        //cutter.getInformation();
-
-        //cutter.getSlice(this.flagC, this.flagW);
         cutter.getSlice();
 
 
