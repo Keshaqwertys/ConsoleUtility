@@ -21,7 +21,7 @@ public class CutLauncher {
     @Option(name = "-o")
     private File outputFile;
 
-    @Option(name = "-r", required = true)
+    @Option(name = "-r")//, required = true)
     private String range;
 
     @Argument(metaVar = "InputName")

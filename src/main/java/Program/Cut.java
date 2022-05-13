@@ -1,6 +1,7 @@
 package Program;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -81,9 +82,10 @@ public class Cut {
             for (String s : text) {
                 StringBuilder resultLine = new StringBuilder();
                 //line = s.split("\t[\\t\\v\\r\\n\\f]");
-                line = s.split(" +");
+                line = filterEmptyLines(s.split("[\r\t\f\s]"));
                 rangeBefore = endRange; ///
                 if (endRange > line.length - 1 || endRange == -1) rangeBefore = line.length - 1;
+
                 for (int element = rangeFrom; element <= rangeBefore; element++) {
                     resultLine.append(line[element] + " ");
                 }
@@ -151,6 +153,20 @@ public class Cut {
     }
 
     private String[] getInputText() throws IOException {
+        System.out.println("Введите входной текст");
+        byte[] bytes;
+        BufferedInputStream bis = new BufferedInputStream(System.in);
+        InputStreamReader isr = new InputStreamReader(bis);
+
+        bytes = bis.readAllBytes();
+
+        String line = new String(bytes, StandardCharsets.UTF_8);
+        isr.close();
+        bis.close();
+        return line.split("\n");
+    }
+
+    private String[] getInputTextAlternative() throws IOException {   //not used
         ArrayList<String> textLines = new ArrayList<String>();
         int counter = 0;
         String line;
@@ -194,8 +210,8 @@ public class Cut {
 
     private void write(String[] text) throws IOException {
         FileWriter fw = new FileWriter(outputFile);
-        for (int index = 0; index < text.length; index++){
-            fw.write(text[index]);
+        for (String s : text) {
+            fw.write(s);
             fw.write(System.lineSeparator());
         }
         fw.close();
@@ -208,6 +224,22 @@ public class Cut {
         }
         newDividedRange[newDividedRange.length - 1] = "";
         return  newDividedRange;
+    }
+
+    private String[] filterEmptyLines(String[] splitLine){
+        ArrayList<String> filtredArray = new ArrayList<>();
+        int counter = 0;
+        for (String s: splitLine){
+            if (!s.equals("")) {
+                filtredArray.add(s);
+                counter++;
+            }
+        }
+        String[] result = new String[counter];
+        for (int i= 0; i < result.length; i++){
+            result[i] = filtredArray.get(i);
+        }
+        return result;
     }
 
 
