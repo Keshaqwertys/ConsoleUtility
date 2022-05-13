@@ -12,20 +12,20 @@ import java.io.InputStreamReader;
 
 public class CutLauncher {
 
-    @Option(name = "-c")
+    @Option(name = "-c", forbids = {"-w"})
     private boolean flagC;
 
     @Option(name = "-w")
     private boolean flagW;
 
     @Option(name = "-o")
-    private String outputNameFile;
+    private File outputFile;
 
-    @Option(name = "-r")
+    @Option(name = "-r", required = true)
     private String range;
 
     @Argument(metaVar = "InputName")
-    private String inputNameFile;
+    private File inputFile;
 
     public static void main(String[] args) throws IOException {
         new CutLauncher().launch(args);
@@ -40,33 +40,20 @@ public class CutLauncher {
             System.err.println(e.getMessage());
             System.err.println("cut [-c|-w] [-o ofile] [-r range] [file]");
             parser.printUsage(System.err);
+            System.exit(0);
         }
 
-        BufferedReader reader;
-        boolean flagInput = false;
-        boolean flagOutput = false;
-        boolean checkFlags = (!flagC) && (!flagW);
-
-        if (inputNameFile == null){
-            inputNameFile = "defaultInputFile";
-            flagInput = true;
-        }
-
-        if (outputNameFile == null){
-            outputNameFile = "defaultOutputFile";
-            flagOutput = true;
-        }
         if (range == null){
-            reader = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Диапозон не задан. Введите диапозон: ");
             range = reader.readLine();
 
         }
 
+        boolean checkFlags = (!flagC) && (!flagW);
         int counter = 0;
-
         while (checkFlags){
-            reader = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             if (counter == 0) System.out.println("Вы не указали параметр диапазона");
             System.out.println("-w: диапозон указывает на слова");
             System.out.println("-с: диапозон указывает на буквы");
@@ -82,11 +69,14 @@ public class CutLauncher {
 
         }
 
-        Cut cutter = new Cut(flagC,flagW,outputNameFile,inputNameFile,range, flagOutput, flagInput);
 
+        Cut cutter = new Cut(this.flagW, this.flagC ,this.inputFile, this.outputFile, this.range);
+
+        //cutter.getInformation();
+
+        //cutter.getSlice(this.flagC, this.flagW);
         cutter.getSlice();
 
 
     }
 }
-
