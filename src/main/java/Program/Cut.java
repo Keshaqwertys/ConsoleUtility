@@ -51,7 +51,7 @@ public class Cut {
 
         if (inputFile == null){
             flagInput = true;
-        } else if (!inputFile.isFile()) throw new IllegalArgumentException("Входной файл не корректен");
+        } else if (!inputFile.isFile()) throw new IllegalArgumentException("Входной файл некорректен");
 
         if (outputFile == null){
             flagOutput = true;
