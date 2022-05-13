@@ -2,130 +2,124 @@ package Program;
 
 import org.junit.Test;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class CutTest {
     @Test
-    public void getSliceTest1() throws IOException {
+    public void getSliceWordRangeTest1() throws IOException {
+        File inputFile = new File("files\\inputFile.txt");
+        File outputFile = new File("files\\outputFile.txt");
+        File testFile1 = new File("files\\Test1.txt");
         Cut cutter;
-        //File outputFile;
-        File inputFile = new File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\inputFile.txt");
-        File outputFile = new File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\outputFile.txt");
-
-        // Тест 1
-        File testFile1 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test1.txt");
 
         cutter = new Cut(true,false, inputFile,outputFile,"0-11");
         cutter.getSlice();
 
-        //outputFile = cutter.getOutputFile();
-
         assertTrue(assertEqualsFile(outputFile,testFile1));
-
-        /*
-        // Тест 2
-        File testFile2 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test2.txt");
-
-        cutter = new Cut(false,true, outputFile,inputFile,"1-2");
-        cutter.getSlice();
-
-        outputFile = cutter.getOutputFile();
-
-        assertTrue(assertEqualsFile(outputFile,testFile2));
-
-        // Тест 3
-
-        File testFile3 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test3.txt");
-
-        cutter = new Cut(false,true, outputFile,inputFile,"1-");
-        cutter.getSlice();
-
-        outputFile = cutter.getOutputFile();
-
-        assertTrue(assertEqualsFile(outputFile,testFile3));
-
-        // Тест 4
-
-        File testFile4 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test4.txt");
-
-        cutter = new Cut(false,true,outputFile, inputFile, "-0");
-        cutter.getSlice();
-
-        outputFile = cutter.getOutputFile();
-
-        assertTrue(assertEqualsFile(outputFile,testFile4));
-
-        // Тест 5
-
-        File testFile5 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test5.txt");
-
-        cutter = new Cut(true,false,outputFile, inputFile, "0-50");
-        cutter.getSlice();
-
-        outputFile = cutter.getOutputFile();
-
-        assertTrue(assertEqualsFile(outputFile,testFile5));
-
-
-        // Тест 6
-
-        File testFile6 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test6.txt");
-
-        cutter = new Cut(true,false,outputFile, inputFile, "2-");
-        cutter.getSlice();
-
-        outputFile = cutter.getOutputFile();
-
-        assertTrue(assertEqualsFile(outputFile,testFile6));
-
-        // Тест 7
-
-        File testFile7 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test7.txt");
-
-        cutter = new Cut(true,false,outputFile, inputFile, "-10");
-        cutter.getSlice();
-
-        outputFile = cutter.getOutputFile();
-
-        assertTrue(assertEqualsFile(outputFile,testFile7));
-
-        // Тест 8
-
-        File testFile8 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test8.txt");
-
-        cutter = new Cut(true,false,outputFile, inputFile, "100-200");
-        cutter.getSlice();
-
-        outputFile = cutter.getOutputFile();
-
-        assertTrue(assertEqualsFile(outputFile,testFile8));
-         */
-
+        assertTrue(assertEqualsFile(outputFile,inputFile));
     }
     @Test
-    public void getSliceTest2() throws IOException {
+    public void getSliceWordRangeTest2() throws IOException {
+        File inputFile = new File("files\\inputFile.txt");
+        File outputFile = new File("files\\outputFile.txt");
+        File testFile2 = new File("files\\Test2.txt");
+        Cut cutter;
 
-        Cut cutter2;
-        File inputFile = new File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\inputFile.txt");
-        File outputFile = new File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\outputFile.txt");
-        // Тест 2
-        File testFile2 = new  File("C:\\Users\\Иннокентий\\IdeaProjects\\ConsoleUtility\\src\\main\\resources\\Test2.txt");
-
-        cutter2 = new Cut(true,false, inputFile,outputFile,"1-2");
-        cutter2.getSlice();
-
-        //outputFile = cutter.getOutputFile();
+        cutter = new Cut(true,false, inputFile,outputFile,"1-2");
+        cutter.getSlice();
 
         assertTrue(assertEqualsFile(outputFile,testFile2));
-
-
-        //File outFile = new File("files\\outputFile.txt");
-        //File inFile = new File("files\\input.txt");
-        //Cut cutter = new Cut(true,false,inFile,outFile,"1-2");
-
+        assertFalse(assertEqualsFile(inputFile,testFile2));
     }
+
+    @Test
+    public void getSliceWordRangeTest3() throws IOException {
+        File inputFile = new File("files\\inputFile.txt");
+        File outputFile = new File("files\\outputFile.txt");
+        File testFile3 = new File("files\\Test3.txt");
+        Cut cutter;
+
+        cutter = new Cut(true,false, inputFile,outputFile,"1-");
+        cutter.getSlice();
+
+        assertTrue(assertEqualsFile(outputFile,testFile3));
+        assertFalse(assertEqualsFile(inputFile,testFile3));
+    }
+
+    @Test
+    public void getSliceWordRangeTest4() throws IOException {
+        File inputFile = new File("files\\inputFile.txt");
+        File outputFile = new File("files\\outputFile.txt");
+        File testFile4 = new File("files\\Test4.txt");
+        Cut cutter;
+
+        cutter = new Cut(true,false, inputFile,outputFile,"-0");
+        cutter.getSlice();
+
+        assertTrue(assertEqualsFile(outputFile,testFile4));
+        assertFalse(assertEqualsFile(inputFile,testFile4));
+    }
+
+    @Test
+    public void getSliceCharRangeTest1() throws IOException {
+        File inputFile = new File("files\\inputFile.txt");
+        File outputFile = new File("files\\outputFile.txt");
+        File testFile5 = new File("files\\Test5.txt");
+        Cut cutter;
+
+        cutter = new Cut(false,true, inputFile,outputFile,"0-50");
+        cutter.getSlice();
+
+        assertTrue(assertEqualsFile(outputFile,testFile5));
+        assertTrue(assertEqualsFile(outputFile,inputFile));
+    }
+    @Test
+    public void getSliceCharRangeTest2() throws IOException {
+        File inputFile = new File("files\\inputFile.txt");
+        File outputFile = new File("files\\outputFile.txt");
+        File testFile6 = new File("files\\Test6.txt");
+        Cut cutter;
+
+        cutter = new Cut(false,true, inputFile,outputFile,"2-");
+        cutter.getSlice();
+
+        assertTrue(assertEqualsFile(outputFile,testFile6));
+    }
+
+    @Test
+    public void getSliceCharRangeTest3() throws IOException {
+        File inputFile = new File("files\\inputFile.txt");
+        File outputFile = new File("files\\outputFile.txt");
+        File testFile7 = new File("files\\Test7.txt");
+        Cut cutter;
+
+        cutter = new Cut(false,true, inputFile,outputFile,"-10");
+        cutter.getSlice();
+
+        assertTrue(assertEqualsFile(outputFile,testFile7));
+        assertFalse(assertEqualsFile(inputFile,outputFile));
+    }
+
+    @Test
+    public void getSliceCharRangeTest4() throws IOException {
+        File inputFile = new File("files\\inputFile.txt");
+        File outputFile = new File("files\\outputFile.txt");
+        File testFile8 = new File("files\\Test8.txt");
+        Cut cutter;
+
+        cutter = new Cut(false,true, inputFile,outputFile,"100-200");
+        cutter.getSlice();
+
+        assertTrue(assertEqualsFile(outputFile,testFile8));
+        assertFalse(assertEqualsFile(inputFile,outputFile));
+    }
+
 
     public boolean assertEqualsFile(File firsFile, File secondFile) throws IOException {
         boolean result = true;

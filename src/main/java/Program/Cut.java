@@ -90,13 +90,17 @@ public class Cut {
                     resultLine.append(line[element] + " ");
                 }
 
-                if (flagOutput){
-                    System.out.println(resultLine);
-                }else {
-                    String slice = resultLine.toString().trim();
-                    resultArray.add(slice);
-                    counterSize++;
-                }
+                String slice = resultLine.toString().trim(); //
+                resultArray.add(slice);                      //
+                counterSize++;                               //
+
+                //if (flagOutput){
+                //    System.out.println(resultLine);
+                //}else {
+                //    String slice = resultLine.toString().trim();
+                //    resultArray.add(slice);
+                //    counterSize++;
+                //}
             }
         } else if (flagC){
             for (String s : text) {
@@ -120,13 +124,17 @@ public class Cut {
                     count++;
                 }
 
-                if (flagOutput){
-                    System.out.println(resultLine);
-                } else {
-                    String slice = resultLine.toString();
-                    resultArray.add(slice);
-                    counterSize++;
-                }
+                String slice = resultLine.toString().trim(); //
+                resultArray.add(slice);                      //
+                counterSize++;                               //
+
+                //if (flagOutput){
+                //    System.out.println(resultLine);
+                //} else {
+                //    String slice = resultLine.toString();
+                //    resultArray.add(slice);
+                //    counterSize++;
+                //}
             }
         }
 
@@ -134,7 +142,9 @@ public class Cut {
         for (int index = 0; index < result.length; index++){
             result[index] = resultArray.get(index);
         }
-        if (!flagOutput) write(result);
+        if (flagOutput)  for (String s: result) System.out.println(s);
+        else writeInOutputFile(result);
+        //if (!flagOutput) writeInOutputFile(result);
     }
 
     private boolean isCorrect(String[] range){
@@ -208,7 +218,7 @@ public class Cut {
         return result;
     }
 
-    private void write(String[] text) throws IOException {
+    private void writeInOutputFile(String[] text) throws IOException {
         FileWriter fw = new FileWriter(outputFile);
         for (String s : text) {
             fw.write(s);
